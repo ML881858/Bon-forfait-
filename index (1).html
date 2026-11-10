@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="BonForfait aide les jeunes à comparer des forfaits mobiles selon leurs besoins et leur budget, avec le coût réel sur 12 mois.">
+<meta name="theme-color" content="#10264b">
+<title>BonForfait — Compare les forfaits mobiles</title>
+<style>
+:root{
+  --navy:#10264b;--navy2:#183966;--blue:#2563eb;--sky:#60a5fa;
+  --pale:#eff6ff;--pale2:#f6f9ff;--ink:#17243b;--muted:#64748b;
+  --line:#e2e8f0;--white:#fff;--green:#15803d;--red:#b91c1c;
+  --amber:#a16207;--shadow:0 16px 45px rgba(16,38,75,.09);--radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:82px}
+body{margin:0;background:#f7faff;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+button,input,select{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+a{color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid #93c5fd;outline-offset:3px}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{max-width:1160px;margin:auto;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:1.2rem;font-weight:900;color:var(--navy);letter-spacing:-.5px}
+.brand-mark{width:38px;height:38px;border-radius:13px;background:linear-gradient(145deg,var(--blue),#123b83);display:grid;place-items:center;color:#fff;font-weight:950;box-shadow:0 6px 15px #2563eb40}
+.nav-links{display:flex;gap:22px;align-items:center}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:.9rem;font-weight:700}
+.nav-links a:hover{color:var(--blue)}
+.container{max-width:1160px;margin:auto;padding:0 22px}
+.hero{padding:76px 0 64px;background:radial-gradient(circle at 84% 16%,#dbeafe 0,transparent 29%),linear-gradient(135deg,#fbfdff,#edf5ff)}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#dbeafe;color:#1d4ed8;border-radius:99px;padding:7px 12px;font-size:.76rem;font-weight:850;letter-spacing:.055em;text-transform:uppercase}
+h1{font-size:clamp(2.7rem,5.6vw,4.8rem);line-height:1.02;letter-spacing:-.06em;color:var(--navy);margin:19px 0}
+h1 span{color:var(--blue)}
+.hero-copy{font-size:1.1rem;color:#52627a;max-width:620px;margin:0 0 26px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{border:0;border-radius:13px;padding:13px 19px;font-weight:850;display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;transition:.18s}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 8px 20px #2563eb35}
+.btn-primary:hover{background:#1d4ed8;transform:translateY(-1px)}
+.btn-secondary{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.btn-secondary:hover{border-color:#93c5fd;background:#f8fbff}
+.hero-card{background:#fff;border:1px solid #e4edfa;border-radius:26px;padding:25px;box-shadow:var(--shadow);transform:rotate(1deg)}
+.mock-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:22px}
+.mock-title{font-weight:900;color:var(--navy)}
+.pill{font-size:.72rem;color:var(--green);background:#dcfce7;border-radius:99px;padding:5px 9px;font-weight:850;white-space:nowrap}
+.mock-price{font-size:2.15rem;font-weight:950;color:var(--navy);letter-spacing:-.055em}
+.mock-price small{font-size:.85rem;color:var(--muted);font-weight:650;letter-spacing:0}
+.mock-line{height:9px;background:#eaf1fb;border-radius:20px;margin:15px 0 19px;overflow:hidden}
+.mock-line span{display:block;width:72%;height:100%;background:linear-gradient(90deg,var(--blue),var(--sky));border-radius:20px}
+.mock-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mock-stat{background:#f6f9ff;border-radius:13px;padding:12px;font-size:.8rem;color:var(--muted)}
+.mock-stat strong{display:block;color:var(--navy);font-size:.98rem}
+.hero-note{font-size:.74rem;color:#8290a5;margin:13px 0 0}
+.section{padding:68px 0}
+.section-head{text-align:center;max-width:720px;margin:0 auto 32px}
+.section-head h2{font-size:clamp(1.85rem,3.3vw,2.6rem);letter-spacing:-.045em;color:var(--navy);margin:0 0 8px}
+.section-head p{color:var(--muted);margin:0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.feature{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+.feature-icon{width:44px;height:44px;border-radius:14px;background:var(--pale);display:grid;place-items:center;font-size:1.25rem;margin-bottom:13px}
+.feature h3{margin:0 0 6px;color:var(--navy);font-size:1.04rem}
+.feature p{margin:0;color:var(--muted);font-size:.91rem}
+.tool-section{background:#eef4fc}
+.panel{max-width:850px;margin:auto;background:#fff;border:1px solid var(--line);border-radius:25px;padding:clamp(20px,4vw,38px);box-shadow:var(--shadow)}
+.progress-wrap{margin-bottom:28px}
+.progress-label{display:flex;justify-content:space-between;color:var(--muted);font-size:.82rem;font-weight:750;margin-bottom:9px}
+.progress{height:7px;background:#eaf0f8;border-radius:20px;overflow:hidden}
+.progress>div{height:100%;width:25%;background:var(--blue);transition:width .25s}
+.step h3{font-size:1.55rem;color:var(--navy);letter-spacing:-.035em;margin:0 0 6px}
+.step-intro{color:var(--muted);margin:0 0 24px}
+.field{margin:19px 0}
+.field label,.field legend{display:block;font-weight:850;color:var(--navy);margin-bottom:8px}
+.field small{display:block;color:var(--muted);margin-top:6px;font-size:.82rem}
+input[type=number],select{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:13px 14px;background:#fff;color:var(--ink);outline:none}
+input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2563eb1f}
+.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice label{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:13px;padding:13px;cursor:pointer;margin:0;color:var(--ink);font-weight:700}
+.choice label:before{content:"";width:17px;height:17px;border:2px solid #94a3b8;border-radius:50%;flex:none}
+.choice input:checked+label{border-color:var(--blue);background:#eff6ff;color:#1d4ed8}
+.choice input:checked+label:before{border:5px solid var(--blue)}
+.step-actions{display:flex;justify-content:space-between;gap:12px;margin-top:27px}
+.error{display:none;background:#fef2f2;color:var(--red);border:1px solid #fecaca;border-radius:11px;padding:11px 13px;margin-top:15px;font-size:.9rem;font-weight:700}
+.error.show{display:block}
+.hidden{display:none!important}
+.results{display:none}
+.results.show{display:block}
+.summary{border-radius:18px;background:linear-gradient(135deg,#10264b,#1d4ed8);color:#fff;padding:23px;margin-bottom:18px}
+.summary .kicker{color:#bfdbfe;font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em}
+.summary h3{font-size:1.55rem;margin:5px 0}
+.summary p{color:#dbeafe;margin:0}
+.result-warning{background:#fffbeb;border:1px solid #fde68a;color:#854d0e;border-radius:13px;padding:13px 15px;margin:0 0 14px;font-size:.9rem}
+.result-list{display:grid;gap:13px}
+.offer{border:1px solid var(--line);border-radius:17px;padding:18px;background:#fff}
+.offer.best{border:2px solid var(--blue);background:#fbfdff}
+.offer-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.offer h4{margin:0;color:var(--navy);font-size:1.08rem}
+.operator{color:var(--muted);font-size:.85rem}
+.price{font-weight:950;color:var(--navy);font-size:1.45rem;white-space:nowrap}
+.price small{font-size:.75rem;color:var(--muted);font-weight:650}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.tag{background:#eff6ff;color:#1d4ed8;padding:5px 9px;border-radius:99px;font-size:.75rem;font-weight:800}
+.tag.gray{background:#f1f5f9;color:#475569}
+.offer-detail{font-size:.88rem;color:#52627a;margin:6px 0}
+.offer-reason{font-size:.88rem;color:#334155;margin:9px 0 0}
+.source-line{font-size:.78rem;color:#64748b;margin-top:9px;overflow-wrap:anywhere}
+.empty{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:15px;padding:20px;color:#52627a}
+.table-wrap{overflow-x:auto;margin-top:20px;border:1px solid var(--line);border-radius:15px}
+table{border-collapse:collapse;width:100%;min-width:650px;background:#fff;font-size:.86rem}
+th,td{text-align:left;padding:12px 13px;border-bottom:1px solid var(--line)}
+th{background:#f1f6fd;color:var(--navy);font-size:.78rem}
+tr:last-child td{border-bottom:0}
+.method{background:#f8fbff;border:1px solid #dbeafe;border-radius:15px;padding:16px;margin-top:18px}
+.method h4{margin:0 0 7px;color:var(--navy)}
+.method p,.method li{font-size:.85rem;color:#52627a}
+.method ul{margin:8px 0;padding-left:20px}
+.notice{font-size:.8rem;color:var(--muted);margin-top:14px}
+.legal{background:var(--navy);color:#dbeafe;padding:48px 0}
+.legal h2{color:#fff;margin:0 0 13px;font-size:1.55rem}
+.legal h3{color:#fff;font-size:1rem;margin:20px 0 5px}
+.legal p,.legal li{font-size:.87rem;color:#cbd8eb}
+.legal strong{color:#fff}
+.legal-box{border:1px solid #385174;border-radius:14px;padding:15px 17px;margin-top:16px;background:#18345e}
+footer{background:#0b1b36;color:#9fb2cf;padding:17px 0;font-size:.8rem}
+.footer-inner{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+@media(max-width:780px){.hero{padding:55px 0 44px}.hero-grid{grid-template-columns:1fr;gap:28px}.hero-card{max-width:500px;transform:none}.features{grid-template-columns:1fr}.nav-links{gap:13px}.nav-links a{font-size:.81rem}}
+@media(max-width:490px){.nav{padding:11px 15px}.container{padding:0 16px}.nav-links a:first-child{display:none}.hero-copy{font-size:1rem}.choices{grid-template-columns:1fr}.offer-top{display:block}.price{margin-top:6px}.step-actions .btn{flex:1;padding:12px 10px}.section{padding:49px 0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <nav class="nav" aria-label="Navigation principale">
+    <a class="brand" href="#accueil"><span class="brand-mark">B</span><span>BonForfait</span></a>
+    <div class="nav-links">
+      <a href="#fonctionnement">Le concept</a>
+      <a href="#comparateur">Comparer</a>
+      <a href="#mentions">Mentions légales</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="accueil">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">📱 Le bon forfait, au bon prix</span>
+      <h1>Ton forfait.<br><span>Ton budget.</span><br>Ton choix.</h1>
+      <p class="hero-copy">Tu veux un forfait mobile qui correspond à ton utilisation sans dépasser ton budget ? Réponds à quelques questions et compare les offres en toute simplicité.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#comparateur">Trouver mon forfait <span aria-hidden="true">→</span></a>
+        <a class="btn btn-secondary" href="#fonctionnement">Comment ça marche ?</a>
+      </div>
+    </div>
+    <aside class="hero-card" aria-label="Aperçu du comparateur">
+      <div class="mock-head"><span class="mock-title">Ton comparatif mobile</span><span class="pill">Simple & rapide</span></div>
+      <div class="mock-price">12 mois <small>pour comparer le vrai coût</small></div>
+      <div class="mock-line"><span></span></div>
+      <div class="mock-grid">
+        <div class="mock-stat">Internet mobile<strong>Les Go adaptés</strong></div>
+        <div class="mock-stat">Budget<strong>Ton prix maximum</strong></div>
+        <div class="mock-stat">Promotions<strong>Après la promo aussi</strong></div>
+        <div class="mock-stat">Comparaison<strong>8 forfaits étudiés</strong></div>
+      </div>
+      <p class="hero-note">Aperçu illustratif : aucune offre commerciale n'est présentée ici.</p>
+    </aside>
+  </div>
+</section>
+
+<section class="section" id="fonctionnement">
+  <div class="container">
+    <div class="section-head">
+      <h2>Choisir son forfait devient plus simple</h2>
+      <p>Les offres sont comparées avec les mêmes critères pour éviter de se fier uniquement au prix affiché en promotion.</p>
+    </div>
+    <div class="features">
+      <article class="feature"><div class="feature-icon">🎯</div><h3>Selon ton utilisation</h3><p>Indique ta consommation mensuelle de données mobiles et tes préférences.</p></article>
+      <article class="feature"><div class="feature-icon">💶</div><h3>Selon ton budget</h3><p>Le prix après promotion est pris en compte pour éviter les mauvaises surprises.</p></article>
+      <article class="feature"><div class="feature-icon">📊</div><h3>Sur une année complète</h3><p>Compare le coût total sur 12 mois et découvre deux autres offres proches de tes critères.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section tool-section" id="comparateur">
+  <div class="container">
+    <div class="section-head">
+      <h2>Trouve le forfait qui te correspond</h2>
+      <p>Quatre réponses rapides pour lancer la comparaison.</p>
+    </div>
+    <div class="panel">
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-label"><span id="stepLabel">Étape 1 sur 2</span><span id="progressPercent">50 %</span></div>
+        <div class="progress"><div id="progressBar" style="width:50%"></div></div>
+      </div>
+
+      <form id="needsForm" novalidate>
+        <section class="step" id="step1">
+          <h3>Ton utilisation</h3>
+          <p class="step-intro">Commençons par tes besoins en Internet mobile.</p>
+          <div class="field">
+            <label for="go">Combien de Go utilises-tu environ chaque mois ?</label>
+            <input id="go" name="go" type="number" min="0" max="2000" step="1" placeholder="Ex. : 80" inputmode="numeric" required>
+            <small>Tu peux retrouver cette information dans les réglages de ton téléphone ou ton espace client.</small>
+          </div>
+          <fieldset class="field" style="border:0;padding:0">
+            <legend>Souhaites-tu avoir la 5G ?</legend>
+            <div class="choices">
+              <div class="choice"><input type="radio" id="fiveYes" name="fiveG" value="yes" required><label for="fiveYes">Oui, je la souhaite</label></div>
+              <div class="choice"><input type="radio" id="fiveNo" name="fiveG" value="no"><label for="fiveNo">Non, pas nécessaire</label></div>
+            </div>
+          </fieldset>
+          <div class="step-actions"><span></span><button class="btn btn-primary" type="button" id="nextBtn">Continuer →</button></div>
+          <div class="error" id="error1" role="alert"></div>
+        </section>
+
+        <section class="step hidden" id="step2">
+          <h3>Ton budget et tes préférences</h3>
+          <p class="step-intro">Encore deux informations et tu pourras voir les résultats.</p>
+          <div class="field">
+            <label for="budget">Quel est ton budget maximum par mois (en euros) ?</label>
+            <input id="budget" name="budget" type="number" min="0.01" max="1000" step="0.01" placeholder="Ex. : 15" inputmode="decimal" required>
+          </div>
+          <fieldset class="field" style="border:0;padding:0">
+            <legend>Préfères-tu un forfait sans engagement ?</legend>
+            <div class="choices">
+              <div class="choice"><input type="radio" id="commitYes" name="commitment" value="yes" required><label for="commitYes">Oui, sans engagement</label></div>
+              <div class="choice"><input type="radio" id="commitNo" name="commitment" value="no"><label for="commitNo">Cela m'est égal</label></div>
+            </div>
+          </fieldset>
+          <div class="step-actions">
+            <button class="btn btn-secondary" type="button" id="backBtn">← Retour</button>
+            <button class="btn btn-primary" type="submit">Comparer les forfaits →</button>
+          </div>
+          <div class="error" id="error2" role="alert"></div>
+        </section>
+      </form>
+
+      <section class="results" id="results" aria-live="polite">
+        <div class="summary">
+          <div class="kicker">Ton comparatif BonForfait</div>
+          <h3 id="summaryTitle">Voici les offres pour toi</h3>
+          <p id="summaryText">Les résultats sont calculés à partir de tes réponses.</p>
+        </div>
+        <div id="resultContent"></div>
+        <div class="step-actions">
+          <button class="btn btn-secondary" type="button" id="restartBtn">Recommencer</button>
+          <a class="btn btn-primary" href="#accueil">Retour à l'accueil ↑</a>
+        </div>
+        <p class="notice">Vérifie toujours les conditions de l'offre sur le site de l'opérateur avant de souscrire. Les informations doivent être actualisées à partir de vos sources.</p>
+      </section>
+    </div>
+  </div>
+</section>
+</main>
+
+<section class="legal" id="mentions">
+  <div class="container">
+    <h2>Mentions légales</h2>
+    <p><strong>Nom de l'application :</strong> BonForfait.</p>
+    <p><strong>Éditeurs :</strong> [Prénom et initiale du nom – Élève 1] et [Prénom et initiale du nom – Élève 2].</p>
+    <p><strong>Classe :</strong> Première STMG. <strong>Lycée :</strong> [Nom du lycée].</p>
+    <p><strong>Hébergement :</strong> GitHub Pages (GitHub, Inc.).</p>
+    <h3>Objet du site</h3>
+    <p>BonForfait est une application réalisée dans le cadre d'un projet pédagogique. Elle aide à comparer des forfaits mobiles en fonction de la consommation de données, du budget et des préférences de l'utilisateur.</p>
+    <div class="legal-box">
+      <p><strong>Simulation pédagogique. Les résultats sont donnés à titre indicatif et ne remplacent pas l'avis d'un professionnel.</strong></p>
+      <p><strong>Aucune donnée personnelle n'est collectée ou enregistrée. Aucun cookie n'est utilisé.</strong></p>
+    </div>
+    <h3>Sources des forfaits</h3>
+    <p>Les 8 offres ci-dessous ont été relevées le 10 novembre 2026 sur les pages officielles des opérateurs. Les tarifs peuvent évoluer : vérifie toujours le récapitulatif contractuel avant toute souscription.</p>
+    <ul id="sourcesList">
+      <li><a href="https://shop.sosh.fr/mobile/oneplus-9-5g-noir" target="_blank" rel="noopener">Sosh — forfaits 1 Go, 20 Go et 100 Go</a> (consulté le 10/11/2026).</li>
+      <li><a href="https://www.red-by-sfr.fr/forfaits-mobiles/" target="_blank" rel="noopener">RED by SFR — forfaits 1 Go et 40 Go</a> (consulté le 10/11/2026).</li>
+      <li><a href="https://www.bouyguestelecom.fr/forfaits-mobiles/sans-engagement" target="_blank" rel="noopener">B&You — forfaits 20 Go et 100 Go</a> (consulté le 10/11/2026).</li>
+      <li><a href="https://mobile.free.fr/" target="_blank" rel="noopener">Free Mobile — Série Free 110 Go et Forfait Free 5G+</a> (consulté le 10/11/2026).</li>
+    </ul>
+    <p><strong>Note :</strong> le coût sur 12 mois correspond aux mensualités du forfait uniquement. Les éventuels frais de carte SIM, d'activation ou de résiliation ne sont pas ajoutés au calcul.</p>
+    <h3>Crédits</h3>
+    <p><strong>Images :</strong> aucun visuel externe dans cette version ; les illustrations de l'interface sont réalisées en CSS et avec des caractères emoji.</p>
+    <p><strong>Polices :</strong> polices système de l'appareil ; aucune police externe chargée.</p>
+  </div>
+</section>
+<footer><div class="container footer-inner"><span>© <span id="year"></span> BonForfait — Projet pédagogique de Première STMG</span><span>Comparer pour choisir en connaissance de cause.</span></div></footer>
+
+<script>
+/*
+ * 8 offres relevées le 10 novembre 2026 sur les sites des opérateurs.
+ * Le coût sur 12 mois correspond aux mensualités, hors frais ponctuels.
+ */
+const FORFAITS = [
+  {operator:"Sosh",name:"Forfait 1 Go bloqué",priceAfterPromo:1.99,promoPrice:null,promoMonths:0,dataGB:1,fiveG:false,noCommitment:true,source:"https://shop.sosh.fr/mobile/oneplus-9-5g-noir",checkedOn:"10/11/2026"},
+  {operator:"RED by SFR",name:"Forfait 1 Go",priceAfterPromo:1.99,promoPrice:null,promoMonths:0,dataGB:1,fiveG:false,noCommitment:true,source:"https://www.red-by-sfr.fr/forfaits-mobiles/",checkedOn:"10/11/2026"},
+  {operator:"B&You",name:"Série spéciale 20 Go 4G",priceAfterPromo:8.99,promoPrice:null,promoMonths:0,dataGB:20,fiveG:false,noCommitment:true,source:"https://www.bouyguestelecom.fr/forfaits-mobiles/sans-engagement",checkedOn:"10/11/2026"},
+  {operator:"Sosh",name:"Forfait 20 Go",priceAfterPromo:9.99,promoPrice:null,promoMonths:0,dataGB:20,fiveG:false,noCommitment:true,source:"https://shop.sosh.fr/mobile/oneplus-9-5g-noir",checkedOn:"10/11/2026"},
+  {operator:"RED by SFR",name:"Forfait 40 Go",priceAfterPromo:9.99,promoPrice:null,promoMonths:0,dataGB:40,fiveG:false,noCommitment:true,source:"https://www.red-by-sfr.fr/forfaits-mobiles/",checkedOn:"10/11/2026"},
+  {operator:"Free Mobile",name:"Série Free 110 Go",priceAfterPromo:19.99,promoPrice:12.99,promoMonths:12,dataGB:110,fiveG:true,noCommitment:true,source:"https://mobile.free.fr/fiche-forfait-serie-free",checkedOn:"10/11/2026"},
+  {operator:"B&You",name:"Série spéciale 100 Go 5G",priceAfterPromo:13.99,promoPrice:null,promoMonths:0,dataGB:100,fiveG:true,noCommitment:true,source:"https://www.bouyguestelecom.fr/forfaits-mobiles/sans-engagement",checkedOn:"10/11/2026"},
+  {operator:"Free Mobile",name:"Forfait Free 5G+ 350 Go",priceAfterPromo:19.99,promoPrice:null,promoMonths:0,dataGB:350,fiveG:true,noCommitment:true,source:"https://mobile.free.fr/",checkedOn:"10/11/2026"}
+];
+
+const $ = id => document.getElementById(id);
+$("year").textContent = new Date().getFullYear();
+
+function showStep(n){
+  $("step1").classList.toggle("hidden",n!==1);
+  $("step2").classList.toggle("hidden",n!==2);
+  $("progressWrap").classList.remove("hidden");
+  $("stepLabel").textContent=`Étape ${n} sur 2`;
+  $("progressPercent").textContent=n===1?"50 %":"100 %";
+  $("progressBar").style.width=n===1?"50%":"100%";
+  $("results").classList.remove("show");
+  $("needsForm").classList.remove("hidden");
+}
+function error(id,msg){$(id).textContent=msg;$(id).classList.add("show")}
+function clearError(id){$(id).textContent="";$(id).classList.remove("show")}
+function radio(name){return document.querySelector(`input[name="${name}"]:checked`)?.value||""}
+function validNumber(v,min,max){return v!==""&&Number.isFinite(Number(v))&&Number(v)>=min&&Number(v)<=max}
+
+$("nextBtn").addEventListener("click",()=>{
+  clearError("error1");
+  if(!validNumber($("go").value,0,2000)){error("error1","Entre une consommation valide, comprise entre 0 et 2 000 Go.");$("go").focus();return}
+  if(!radio("fiveG")){error("error1","Choisis si tu souhaites la 5G ou non.");return}
+  showStep(2);
+});
+$("backBtn").addEventListener("click",()=>{clearError("error2");showStep(1)});
+$("needsForm").addEventListener("submit",e=>{
+  e.preventDefault();clearError("error2");
+  if(!validNumber($("budget").value,.01,1000)){error("error2","Entre un budget valide, supérieur à 0 € et inférieur ou égal à 1 000 €.");$("budget").focus();return}
+  if(!radio("commitment")){error("error2","Indique si tu préfères un forfait sans engagement.");return}
+  renderResults({
+    go:Number($("go").value),budget:Number($("budget").value),
+    fiveG:radio("fiveG")==="yes",noCommitment:radio("commitment")==="yes"
+  });
+});
+
+function annualCost(p){
+  const normal=Number(p.priceAfterPromo);
+  const promo=p.promoPrice===null||p.promoPrice===undefined||p.promoPrice===""?normal:Number(p.promoPrice);
+  const months=Math.max(0,Math.min(12,Number(p.promoMonths)||0));
+  return promo*months+normal*(12-months);
+}
+function maxMonthlyCost(p){
+  const normal=Number(p.priceAfterPromo);
+  const promo=p.promoPrice===null||p.promoPrice===undefined||p.promoPrice===""?normal:Number(p.promoPrice);
+  const months=Math.max(0,Math.min(12,Number(p.promoMonths)||0));
+  return Math.max(promo,normal);
+}
+function validPlan(p){
+  return p&&typeof p.operator==="string"&&p.operator.trim()&&typeof p.name==="string"&&p.name.trim()&&
+    Number.isFinite(Number(p.priceAfterPromo))&&Number(p.priceAfterPromo)>=0&&
+    (p.promoPrice===null||p.promoPrice===undefined||p.promoPrice===""||(Number.isFinite(Number(p.promoPrice))&&Number(p.promoPrice)>=0))&&
+    Number.isInteger(Number(p.promoMonths))&&Number(p.promoMonths)>=0&&Number(p.promoMonths)<=12&&
+    Number.isFinite(Number(p.dataGB))&&Number(p.dataGB)>=0&&
+    typeof p.fiveG==="boolean"&&typeof p.noCommitment==="boolean";
+}
+function euro(n){return new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR"}).format(n)}
+function safe(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function criteria(p,u){
+  return {
+    data: p.dataGB>=u.go,
+    budget: maxMonthlyCost(p)<=u.budget,
+    fiveG: !u.fiveG||p.fiveG,
+    commitment: !u.noCommitment||p.noCommitment
+  };
+}
+function misses(p,u){
+  const c=criteria(p,u);return Object.values(c).filter(v=>!v).length;
+}
+function shortfall(p,u){
+  const dataGap=Math.max(0,u.go-p.dataGB);
+  const budgetGap=Math.max(0,maxMonthlyCost(p)-u.budget);
+  return dataGap/Math.max(1,u.go)+budgetGap/Math.max(1,u.budget);
+}
+function reason(p,u){
+  const c=criteria(p,u),parts=[];
+  parts.push(c.data?"volume de données suffisant":`${p.dataGB} Go au lieu de ${u.go} Go souhaités`);
+  parts.push(c.budget?"budget respecté même après promotion":`dépassement du budget de ${euro(maxMonthlyCost(p)-u.budget)} par mois`);
+  if(u.fiveG)parts.push(c.fiveG?"5G incluse":"pas de 5G");
+  if(u.noCommitment)parts.push(c.commitment?"sans engagement":"avec engagement");
+  return parts.join(" ; ")+".";
+}
+function renderResults(u){
+  $("needsForm").classList.add("hidden");$("progressWrap").classList.add("hidden");$("results").classList.add("show");
+  const valid=FORFAITS.filter(validPlan);
+  const invalid=FORFAITS.length-valid.length;
+  const content=$("resultContent");
+  if(valid.length===0){
+    $("summaryTitle").textContent="Les offres ne peuvent pas être comparées";
+    $("summaryText").textContent="Les données des forfaits doivent être vérifiées à partir des sources officielles.";
+    content.innerHTML=`<div class="empty"><strong>Les offres ne peuvent pas être comparées.</strong><br>Les données intégrées doivent être vérifiées et complétées à partir des sources officielles.</div>`;
+    return;
+  }
+  const sorted=valid.map(p=>({...p,cost12:annualCost(p),maxMonth:maxMonthlyCost(p),criteria:criteria(p,u)}))
+    .sort((a,b)=>misses(a,u)-misses(b,u)||shortfall(a,u)-shortfall(b,u)||a.cost12-b.cost12||b.dataGB-a.dataGB);
+  const exact=sorted.filter(p=>misses(p,u)===0);
+  const chosen=(exact.length?exact:sorted).slice(0,3);
+  $("summaryTitle").textContent=exact.length?"Des forfaits correspondent à tes critères":"Aucun forfait ne respecte tous tes critères";
+  $("summaryText").textContent=exact.length
+    ?`${exact.length} offre(s) respectent les critères obligatoires. Voici les trois mieux classées.`
+    :"Voici les offres les plus proches de ta recherche, classées selon le nombre et l'importance des critères non respectés.";
+  let html="";
+  if(FORFAITS.length!==8||invalid>0){
+    html+=`<div class="result-warning">Vérification des données : ${valid.length} forfait(s) valides sur ${FORFAITS.length} renseigné(s). Le projet demande 8 offres complètes. Vérifie les données avant de présenter ce résultat.</div>`;
+  }
+  if(!exact.length){
+    const lowest= Math.min(...valid.map(p=>maxMonthlyCost(p)));
+    if(u.budget<lowest)html+=`<div class="result-warning">Ton budget semble trop bas : le forfait valide le moins cher coûte au minimum ${euro(lowest)} par mois sur la période considérée.</div>`;
+  }
+  html+=`<div class="result-list">`;
+  chosen.forEach((p,i)=>{
+    const exactMatch=misses(p,u)===0;
+    const promo=p.promoPrice!==null&&p.promoPrice!==undefined&&p.promoPrice!==""&&Number(p.promoMonths)>0;
+    const label=exactMatch?(i===0?"Meilleure correspondance":`Alternative ${i}`):(i===0?"Offre la plus proche":`Offre proche ${i}`);
+    html+=`<article class="offer ${i===0?"best":""}">
+      <div class="offer-top"><div><h4>${safe(p.name)}</h4><div class="operator">${safe(p.operator)}</div></div>
+      <div class="price">${euro(p.cost12/12)}<small> / mois en moyenne</small></div></div>
+      <div class="tags"><span class="tag">${Number(p.dataGB)} Go</span><span class="tag">${p.fiveG?"5G":"4G"}</span><span class="tag">${p.noCommitment?"Sans engagement":"Avec engagement"}</span><span class="tag gray">${label}</span></div>
+      <p class="offer-detail"><strong>Coût total sur 12 mois :</strong> ${euro(p.cost12)}</p>
+      <p class="offer-detail"><strong>Prix après promotion :</strong> ${euro(Number(p.priceAfterPromo))}/mois</p>
+      <p class="offer-detail">${promo?`Promotion : ${euro(Number(p.promoPrice))}/mois pendant ${Number(p.promoMonths)} mois, puis ${euro(Number(p.priceAfterPromo))}/mois.`:"Aucune promotion renseignée."}</p>
+      <p class="offer-reason"><strong>Pourquoi cette offre ?</strong> ${safe(reason(p,u))}</p>
+      ${p.source?`<p class="source-line">Source : ${safe(p.source)}${p.checkedOn?" — consultée le "+safe(p.checkedOn):""}</p>`:""}
+    </article>`;
+  });
+  html+=`</div>`;
+  html+=`<div class="method"><h4>Comment le classement est-il fait ?</h4>
+    <p>BonForfait applique les critères dans cet ordre :</p>
+    <ol><li>Le nombre de critères respectés (Go, budget, 5G si demandée, sans engagement si demandé).</li>
+    <li>La proximité avec le besoin en Go et le budget si aucune offre ne correspond parfaitement.</li>
+    <li>Le coût total sur 12 mois le plus bas pour départager les offres.</li></ol>
+    <p><strong>Calcul annuel :</strong> (prix promotionnel × nombre de mois de promotion) + (prix après promotion × autres mois jusqu'au 12e mois).</p>
+    <p>Le budget est vérifié avec le prix mensuel le plus élevé sur les 12 mois, afin de ne pas recommander une offre qui dépasse ensuite le budget indiqué.</p>
+  </div>`;
+  if(sorted.length>3){
+    html+=`<details class="method"><summary><strong>Voir le tableau de comparaison de toutes les offres</strong></summary>
+    <div class="table-wrap"><table><thead><tr><th>Offre</th><th>Go</th><th>Prix après promo</th><th>Coût sur 12 mois</th><th>Critères manquants</th></tr></thead><tbody>`;
+    sorted.forEach(p=>{html+=`<tr><td>${safe(p.operator)} — ${safe(p.name)}</td><td>${p.dataGB}</td><td>${euro(Number(p.priceAfterPromo))}</td><td>${euro(p.cost12)}</td><td>${misses(p,u)}</td></tr>`});
+    html+=`</tbody></table></div></details>`;
+  }
+  content.innerHTML=html;
+}
+$("restartBtn").addEventListener("click",()=>{
+  $("needsForm").reset();clearError("error1");clearError("error2");showStep(1);
+  $("results").classList.remove("show");$("resultContent").innerHTML="";
+});
+</script>
+</body>
+</html>
